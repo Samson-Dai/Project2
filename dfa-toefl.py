@@ -44,8 +44,14 @@ try:
     for i, line in enumerate(fa):
         line = line.rstrip()
         if i == 0:
-            machine_name = line
-            print ("Machine Name : " + machine_name);
+            if ":" in line:
+                colon = line.index(':')
+                machine_name = line[:colon]
+                print ("Machine name: " + machine_name)
+            else:
+                machine_name = line
+                print ("Machine name: " + machine_name)
+
         elif i == 1:
             alphabet = line.split(',')
             print("Alphabet: " + str(alphabet))
