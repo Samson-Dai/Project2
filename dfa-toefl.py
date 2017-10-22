@@ -23,7 +23,7 @@ dfa_machine={}
 fa_file = sys.argv[1]
 test_file = sys.argv[2]
 fa = open(fa_file, "r")
-
+test = open(test_file, "r")
 
 try:
     for i, line in enumerate(fa):
@@ -49,7 +49,11 @@ try:
             print("Rule "+ str(i-4) +" : "+ line)
             read_rules(line, i-4)
 
+    for line in test:
+        print line
+
     print(dfa_machine)
+
 except:
     print "Cannot read the file"
 finally:
