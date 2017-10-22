@@ -38,7 +38,7 @@ accepting_states = []
 fa_file = sys.argv[1]
 test_file = sys.argv[2]
 fa = open(fa_file, "r")
-
+test = open(test_file, "r")
 
 try:
     for i, line in enumerate(fa):
@@ -66,6 +66,9 @@ try:
             print("Accepting state : " + str(accepting_states))
         else:
             print("Rule "+ str(i-4) +" : "+ line)
+
+    for line in test:
+        print line
 except:
     print "Cannot read the file"
 finally:
