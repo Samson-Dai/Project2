@@ -17,6 +17,7 @@ alphabet = []
 states = []
 start_state = ""
 accepting_states = []
+dfa_machine = {}
 
 
 fa_file = sys.argv[1]
@@ -52,9 +53,6 @@ try:
             print("Rule "+ str(i-4) +" : "+ line)
 
             read_rules(line, i-4)
-
-    for line in test:
-        print line
 
     print(dfa_machine)
 
