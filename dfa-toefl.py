@@ -11,14 +11,13 @@ def read_rules(line, rule_num):
     new_state = line_list[2]
     dfa_machine[init_state][input_symbol]= [new_state,rule_num]
 
-    
 
 machine_name = ""
 alphabet = []
 states = []
 start_state = ""
 accepting_states = []
-dfa_machine={}
+
 
 fa_file = sys.argv[1]
 test_file = sys.argv[2]
@@ -29,15 +28,19 @@ try:
     for i, line in enumerate(fa):
         line = line.rstrip()
         if i == 0:
-            machine_name = line
-            print ("Machine Name : " + machine_name);
+            if ":" in line:
+                colon = line.index(':')
+                machine_name = line[:colon]
+                print ("Machine name: " + machine_name)
+            else:
+                machine_name = line
+                print ("Machine name: " + machine_name)
+
         elif i == 1:
             alphabet = line.split(',')
             print("Alphabet: " + str(alphabet))
         elif i ==2:
             states = line.split(',')
-            for state in states:
-                dfa_machine[state] = {}
             print("States: " + str(states))
         elif i == 3:
             start_state = line
@@ -47,12 +50,16 @@ try:
             print("Accepting state : " + str(accepting_states))
         else:
             print("Rule "+ str(i-4) +" : "+ line)
+
             read_rules(line, i-4)
 
     for line in test:
         print line
 
     print(dfa_machine)
+
+    for line in test:
+        print line
 
 except:
     print "Cannot read the file"
