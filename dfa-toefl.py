@@ -12,7 +12,7 @@ def read_rules(line, rule_num):
     dfa_machine[init_state][input_symbol]= [new_state,rule_num]
 
 def do_test(line):
-    global dfa_machine, current_state, accepting_states
+    global dfa_machine, current_state, accepting_states,start_state
     for i in range(0, len(line)):
         letter = line[i]
         init_state = current_state
@@ -24,6 +24,8 @@ def do_test(line):
         print("Accepted\n")
     else:
         print("Rejected\n")
+    current_state = start_state
+
 
 machine_name = ""
 alphabet = []
