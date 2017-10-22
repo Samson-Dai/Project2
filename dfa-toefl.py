@@ -21,9 +21,9 @@ def do_test(line):
         print(str(i+1)+","+str(rule_num)+","+str(init_state)+","+str(letter)+","+str(new_state))
         current_state = new_state
     if current_state in accepting_states:
-        print("Accepted")
+        print("Accepted\n")
     else:
-        print("Rejected")
+        print("Rejected\n")
 
 machine_name = ""
 alphabet = []
