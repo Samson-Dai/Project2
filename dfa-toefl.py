@@ -4,14 +4,12 @@ import time
 from copy import deepcopy
 
 def read_rules(line, rule_num):
-    global alphabet, states, dfa_machine
+    global dfa_machine
     line_list = line.split(',')
     init_state = line_list[0]
     input_symbol = line_list[1]
     new_state = line_list[2]
-    dfa_machine[init_state]
-
-
+    dfa_machine[init_state][input_symbol]= [new_state,rule_num]
 
     
 
@@ -50,6 +48,8 @@ try:
         else:
             print("Rule "+ str(i-4) +" : "+ line)
             read_rules(line, i-4)
+
+    print(dfa_machine)
 except:
     print "Cannot read the file"
 finally:
