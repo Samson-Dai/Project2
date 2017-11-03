@@ -1,0 +1,6 @@
+abb
+bbabb
+aaababb
+abbabbabb
+bbbbaaaaabb
+bbababbababbabb
