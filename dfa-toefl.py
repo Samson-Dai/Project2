@@ -12,19 +12,34 @@ def read_rules(line, rule_num):
     dfa_machine[init_state][input_symbol]= [new_state,rule_num]
 
 def do_test(line):
-    global dfa_machine, current_state, accepting_states,start_state
+    global dfa_machine, current_state, accepting_states,start_state, alphabet, rejected_states
+
+    current_state = start_state  # set current state to the start state 
     for i in range(0, len(line)):
         letter = line[i]
         init_state = current_state
+
+        if (letter not in alphabet):
+            print("Invalid Input")
+            current_state = rejected_states[0]
+            break;
+
+
+        if (letter not in dfa_machine[current_state]):
+            print("No rule for state " + str(current_state) + " with input "+ str(letter))
+            current_state = rejected_states[0]
+            break;
+        
         new_state = dfa_machine[current_state][letter][0]
         rule_num = dfa_machine[current_state][letter][1]
         print(str(i+1)+","+str(rule_num)+","+str(init_state)+","+str(letter)+","+str(new_state))
-        current_state = new_state
+        current_state = new_state #update current state
+
     if current_state in accepting_states:
         print("Accepted\n")
     else:
         print("Rejected\n")
-    current_state = start_state
+    
 
 
 machine_name = ""
@@ -32,6 +47,7 @@ alphabet = []
 states = []
 start_state = ""
 accepting_states = []
+rejected_states = []
 current_state =""
 dfa_machine = {}
 
@@ -41,7 +57,7 @@ test_file = sys.argv[2]
 fa = open(fa_file, "r")
 test = open(test_file, "r")
 
-try:
+try:  #read from the DFA definition and construct the machine, print the information at the same time
     for i, line in enumerate(fa):
         line = line.rstrip()
         if i == 0:
@@ -63,16 +79,17 @@ try:
             print("States: " + str(states))
         elif i == 3:
             start_state = line
-            current_state = start_state
             print("Start state : " + start_state)
         elif i ==4:
             accepting_states = line.split(',')
-            print("Accepting state : " + str(accepting_states))
+            rejected_states = list(set(states).difference(set(accepting_states)))
+            print("Accepting states : " + str(accepting_states))
+            print("Rejected states: " + str(rejected_states))
         else:
             print("Rule "+ str(i-4) +" : "+ line)
             read_rules(line, i-4)
 
-    for line in test:
+    for line in test: #read from the test file and do the test
         line = line.rstrip()
         print("String : " + line)
         do_test(line)
