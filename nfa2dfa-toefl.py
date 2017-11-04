@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import sys
-import time
 from copy import deepcopy
 from itertools import combinations
 
@@ -74,7 +73,7 @@ def explore(states_to_explore):
             temp_list =  deepcopy(reachable_states)  #need to count in all the reach states for the result
             temp_list.sort()
             result[a_symbol] = ''.join(temp_list)
-        print(temp_list)
+            print(temp_list)
 
         if (state_str not in  new_dfa_machine["transfer_function"]): # add it to the rule
             new_dfa_machine["transfer_function"][state_str] = {}

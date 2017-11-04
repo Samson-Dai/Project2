@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import sys
-import time
 from copy import deepcopy
 
 #this function reads rules and rule number to state what each rule does.
