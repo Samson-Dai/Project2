@@ -1,0 +1,21 @@
+jgam to DFA
+0,1
+phi,q1,q2,q3,q4,q1q2,q1q3,q1q4,q2q3,q2q4,q3q4,q1q2q3,q1q2q4,q1q3q4,q2q3q4,q1q2q3q4
+q1
+q4,q1q4,q1q2q3q4
+q1,1,q1
+q1,0,q1q2q3
+q2q3,1,q4
+q2q3,0,q3
+phi,1,phi
+phi,0,phi
+q4,1,q4
+q4,0,q4
+q1q2q3q4,1,q1q4
+q1q2q3q4,0,q1q2q3q4
+q1q2q3,1,q1q4
+q1q2q3,0,q1q2q3
+q3,1,q4
+q3,0,phi
+q1q4,1,q1q4
+q1q4,0,q1q2q3q4
