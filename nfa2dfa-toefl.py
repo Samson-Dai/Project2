@@ -3,7 +3,7 @@ import sys
 from copy import deepcopy
 from itertools import combinations
 
-def read_rules(line):
+def read_rules(line): # read in the rules and update nfa_machine
     global nfa_machine
     rules = nfa_machine["transfer_function"]
     line_list = line.split(',')
@@ -15,8 +15,7 @@ def read_rules(line):
     rules[init_state][input_symbol].append(new_state)
 
 
-def get_reachable_states(state):
-    global reachable_states,detected_states,nfa_machine
+def get_reachable_states(state):  #for a state, recursively call this function to find all the states it can reach with ~
     detected_states.append(state)
     if('~' in nfa_machine["transfer_function"][state]):
         raw_states = nfa_machine["transfer_function"][state]['~']
@@ -27,13 +26,13 @@ def get_reachable_states(state):
         if(len(to_detect) > 0):
             update_reachable_states(to_detect)
 
-def update_reachable_states(state_list):
+def update_reachable_states(state_list): # get reachable states for a list of states, in this function, we use for loop and call update_reachable_states
     global reachable_states,detected_states
     for state in state_list:
         get_reachable_states(state)
 
 
-def explore_individual (a_state, a_symbol):
+def explore_individual (a_state, a_symbol): #for a state and a symbol, return a list of states that can be reached, do not consider ~
     global nfa_machine
     if(a_symbol in nfa_machine["transfer_function"][a_state]):
         return nfa_machine["transfer_function"][a_state][a_symbol]
@@ -41,7 +40,8 @@ def explore_individual (a_state, a_symbol):
         return ''
 
 
-def explore(states_to_explore):
+def explore(states_to_explore):  
+    #find the rule for a new state in dfa, and if the result state is new, we add it to list new_states and to_explore
     global new_states,to_explore,state_map,nfa_machine, new_dfa_machine, reachable_states, detected_states
 
     state_str = ''.join(states_to_explore)
@@ -85,7 +85,7 @@ def explore(states_to_explore):
             state_map[result[a_symbol]] = temp_list
             print("We have a new state when explore: " + str(temp_list))
 
-def gen_new_states():
+def gen_new_states(): # get the states for the new dfa machine, it's the power set of the original states
     global nfa_machine, new_dfa_machine
     new_dfa_machine["states"].append("phi")
     original_states = nfa_machine["states"]
@@ -97,7 +97,7 @@ def gen_new_states():
             new_state = ''.join(t)
             new_dfa_machine["states"].append(new_state)
     
-def check_accepting_states(states):
+def check_accepting_states(states):  # check if a set of states contain the accepting states in the original states, if yes, add it to the dfa states 
     global nfa_machine, new_dfa_machine
     ac = ''.join(states)
     for s in states:
@@ -105,7 +105,7 @@ def check_accepting_states(states):
             new_dfa_machine["accepting_states"].append(ac)
             break
 
-def add_trap_rule():
+def add_trap_rule(): # add the rule for the "phi" state
     global nfa_machine, new_dfa_machine
     new_dfa_machine["transfer_function"]['phi'] = {}
     for symbol in nfa_machine["alphabet"] :
@@ -190,7 +190,7 @@ new_dfa_machine["alphabet"] = nfa_machine["alphabet"]
 gen_new_states()
 add_trap_rule()
 
-while (len(to_explore)>0):
+while (len(to_explore)>0):  # explore until nothing left
     element_to_explore = to_explore[0]
     print("The remain to explore is " + str(to_explore))
     to_explore.pop(0)
